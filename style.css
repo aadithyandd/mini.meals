@@ -1,0 +1,417 @@
+        @import url('https://fonts.googleapis.com/css2?family=Manjari:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Zalando+Sans+Expanded:ital,wght@0,200..900;1,200..900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;800&display=swap');
+
+        h1 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+        }
+
+        .price-tag {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 500;
+        }
+
+        :root {
+            --primary-dark: #1a120b;
+            --accent-gold: #c69749;
+            --accent-brown: #735f32;
+            --glass-white: rgba(255, 255, 255, 0.9);
+            --soft-cream: #fcfaf1;
+            --success-green: #2d6a4f;
+            --dot-color: rgba(198, 151, 73, 0.15);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: var(--soft-cream);
+            background-position: center;
+            background-attachment: fixed;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card {
+            background: var(--glass-white);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-top: 10px solid var(--accent-gold);
+            border-radius: 35px;
+            padding: 50px 40px;
+            box-shadow: 0 30px 60px rgba(26, 18, 11, 0.15);
+            margin: 40px auto;
+            width: 90%;
+            max-width: 440px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+            width: 92%;
+            margin: 20px auto;
+            padding: 35px 25px;
+        }
+
+        #mealName {
+            font-family: 'Manjari', sans-serif;
+            font-size: 1.6rem;
+            color: #1a1a1a;
+            line-height: 2;
+            margin: 25px auto;
+            width: max-content;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+        }
+
+        .dish-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            transition: transform 0.2s ease;
+        }
+
+        .dish-item:hover {
+            transform: translateX(5px);
+            color: var(--accent-orange);
+        }
+
+        .price-tag {
+            background: #f0fff4;
+            color: #2d6a4f;
+            display: inline-block;
+            padding: 5px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 2rem;
+            margin-bottom: 25px;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            padding: 10px 5px;
+            position: sticky;
+            top: 15px;
+            margin: 0 15px;
+            z-index: 1000;
+
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.17);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(6.3px);
+            -webkit-backdrop-filter: blur(6.3px);
+            border: 1px solid rgba(255, 255, 255, 0.26);
+        }
+
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo {
+            height: 32px;
+            width: auto;
+        }
+
+        .brand-text {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            color: var(--primary-dark);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.95rem;
+        }
+
+        .bn {
+            font-family: "inter", sans-serif;
+        }
+
+        .hero-title {
+            text-align: center;
+            margin-top: 30px;
+            padding: 0 15px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-title h1 {
+            padding-top: 40px;
+            font-family: 'inter', sans-serif;
+            font-size: 2.2rem;
+            color: rgb(77, 53, 32);
+            margin: 0;
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero-title h1::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 45px;
+            height: 4px;
+            background: var(--accent-gold);
+            border-radius: 10px;
+        }
+
+        .hero-title p {
+            font-size: 0.8rem;
+            color: var(--accent-gold);
+            margin-top: 15px;
+            font-weight: 600;
+        }
+
+        .hero-title {
+            animation: fadeInUp 1.2s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            background: var(--glass-white);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-top: 10px solid var(--accent-gold);
+            border-radius: 30px;
+            padding: 35px 25px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            margin: 25px auto 40px auto;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .card h2 {
+            color: #888;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 40px 80px rgba(26, 18, 11, 0.2);
+        }
+
+        #mealName {
+            font-family: 'Manjari', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            line-height: 1.8;
+            margin: 20px auto;
+            width: fit-content;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+        }
+
+        .dish-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.2s ease;
+        }
+
+        .price-tag {
+            background: #e9f5ee;
+            color: var(--success-green);
+            display: inline-block;
+            padding: 8px 22px;
+            border-radius: 100px;
+            font-weight: 800;
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        #orderForm {
+            display: none;
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid #eee;
+        }
+
+        .footer {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 40px 20px;
+            margin-top: 50px;
+            text-align: center;
+            color: rgb(100, 100, 100);
+        }
+
+        .footer-content {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .footer-logo-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .footer-logo {
+            height: 30px;
+            width: auto;
+            filter: brightness(0) invert(1);
+        }
+
+        .footer-logo-section h3 {
+            font-family: 'Outfit', sans-serif;
+            letter-spacing: 2px;
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .address {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .footer-divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.2);
+            width: 50px;
+            margin: 20px auto;
+        }
+
+        .copyright {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.6;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+
+        button {
+            width: 100%;
+            padding: 16px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        #bookBtn {
+            background: #007bff;
+            color: white;
+            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.3);
+            border: none;
+            font-size: 'inter', sans-serif;
+        }
+
+        #orderForm button {
+            background: #e65c00;
+            color: white;
+            margin-top: 10px;
+            border: none;
+            font-size: 'inter', sans-serif;
+
+        }
+
+        #bookBtn:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        #orderForm button {
+            background: #e65c00;
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 102, 0, 0.3);
+            margin-top: 10px;
+        }
+
+        #orderForm button:hover {
+            background: #e65c00;
+            transform: translateY(-2px);
+        }
+
+        .floating-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .floating-item {
+            position: absolute;
+            opacity: 0.25;
+            filter: blur(2px);
+            animation: floatAnimation 8s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes floatAnimation {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-30px) rotate(15deg);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }

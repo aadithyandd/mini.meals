@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMCST - Mini Meal Scheme</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" class="mini-favicon" type="image/png"  href="/images/icon2.png">
+</head>
+
+<body>
+    <div class="floating-container" id="floatingContainer"></div>
+<nav class="navbar">
+    <div class="brand-container">
+        <img src="images\lmcst_lg.png" alt="Lourdes Matha Logo" class="logo">
+    </div>
+</nav>
+
+    <div class="hero-title">
+        <h1 class='head'>Mini Meal Scheme</h1>
+        <p style="font-size: 15px;">Initiative by LMCST</p>
+    </div>
+
+    <div class="card">
+        <h2>Today's Menu</h2>
+        <h1 id="mealName">Loading...</h1>
+        <div class="price-tag">₹<span id="mealPrice">--</span></div>
+        <button id="bookBtn" onclick="showForm()" class='bn'>Book Now</button>
+
+        <div id="orderForm">
+            <input type="text" id="stdName" placeholder="Full Name">
+            <input type="text" id="stdSem" placeholder="Semester (e.g., S3)">
+            <input type="tel" id="stdPhone" placeholder="Phone Number">
+            <button onclick="submitOrder()">Confirm My Meal</button>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = "https://script.google.com/macros/s/AKfycbw28MFKmvjVehdowK_BG4xYjCdxXFbu52F61MtMLUlpABUfE8W5M8H3J3_PsvyYzUSzHQ/exec";
+        fetch(API_URL).then(r => r.json()).then(data => {
+            document.getElementById('mealName').innerText = data.itemName;
+            document.getElementById('mealPrice').innerText = data.price;
+        });
+
+        function showForm() {
+            document.getElementById('orderForm').style.display = 'block';
+            document.getElementById('bookBtn').style.display = 'none';
+        }
+
+        async function submitOrder() {
+            const name = document.getElementById('stdName').value;
+            const sem = document.getElementById('stdSem').value;
+            const phone = document.getElementById('stdPhone').value;
+            const meal = document.getElementById('mealName').innerText;
+
+            if (!name || !sem || !phone) return alert("Please fill all details");
+
+            const response = await fetch(API_URL, {
+                method: "POST",
+                body: JSON.stringify({ action: "order", name, sem, phone, meal })
+            });
+            const result = await response.text();
+            alert(result);
+            location.reload();
+        }
+        function createFloatingMeals() {
+            const container = document.getElementById('floatingContainer');
+            const items = ['🍲', '🍚', '🌶️', '🍋', '🍛', '🍃'];
+            const itemCount = 15;
+
+            for (let i = 0; i < itemCount; i++) {
+                const span = document.createElement('span');
+                span.className = 'floating-item';
+
+                span.innerText = items[Math.floor(Math.random() * items.length)];
+
+                span.style.left = Math.random() * 100 + 'vw';
+                span.style.top = Math.random() * 100 + 'vh';
+
+                span.style.animationDelay = Math.random() * 5 + 's';
+                span.style.fontSize = (Math.random() * 20 + 20) + 'px';
+
+                container.appendChild(span);
+            }
+        }
+
+        window.addEventListener('load', createFloatingMeals);
+    </script>
+    <br><br><br>
+    <footer class="footer">
+    <div class="footer-content">
+        <div class="footer-logo-section">
+            <img src="logo.png" alt="LMCST Logo" class="footer-logo">
+        </div>
+        <p class="address">
+            Lourdes Matha College of Science and Technology<br>
+            Lourdes Hills, Kuttichal, P.O.<br>
+            Thiruvananthapuram, Kerala - 695574
+        </p>
+        <div class="footer-divider"></div>
+        <p class="copyright">© 2026 Mini Meal Scheme</p>
+    </div>
+</footer>
+</body>
+
+</html>
