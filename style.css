@@ -352,20 +352,13 @@
             color: white;
             margin-top: 10px;
             border: none;
-            font-size: 'inter', sans-serif;
+            font-family: 'inter', sans-serif;
 
         }
 
         #bookBtn:hover {
             background: #0056b3;
             transform: translateY(-2px);
-        }
-
-        #orderForm button {
-            background: #e65c00;
-            color: white;
-            box-shadow: 0 4px 15px rgba(255, 102, 0, 0.3);
-            margin-top: 10px;
         }
 
         #orderForm button:hover {
@@ -382,6 +375,70 @@
             z-index: -1;
             overflow: hidden;
             pointer-events: none;
+        }
+
+        #orderForm select {
+            width: 100%;
+            padding: 14px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            font-family: inherit;
+            box-sizing: border-box;
+            font-size: 1rem;
+            background-color: white;
+            color: #333;
+            appearance: none;
+            /* Removes default arrow to customize if needed */
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23666%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 0.65rem auto;
+        }
+
+        .meal-counter-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 15px 0;
+            padding: 10px 15px;
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 12px;
+        }
+
+        .counter-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .count-btn {
+            width: 35px !important;
+            height: 35px !important;
+            padding: 0 !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--accent-gold) !important;
+            color: white !important;
+            border-radius: 50% !important;
+            font-size: 1.5rem !important;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #mealCountDisplay {
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: var(--primary-dark);
+        }
+
+        .total-display {
+            font-family: 'Inter', sans-serif;
+            font-weight: 800;
+            font-size: 1.3rem;
+            margin: 15px 0;
+            color: var(--success-green);
+            text-align: center;
         }
 
         .floating-item {
