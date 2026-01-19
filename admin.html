@@ -189,28 +189,53 @@
     </style>
 </head>
 
-<body>
+<body onload="loaded()">
     <div class="container">
         <h2>Menu Management</h2>
         <input type="password" id="pass" placeholder="Admin Password">
-        <textarea id="newItem" placeholder="Enter dishes (one per line)" rows="4"></textarea>
-        <input type="number" id="newPrice" placeholder="Enter Price (₹)">
-        <button class="btn-update" onclick="updateMenu()">Update Live Website</button>
+        <button onclick="enter_btn()" id="etrbtn" class="btn-refresh">enter</button>
+        <div id="rest">
+            <textarea id="newItem" placeholder="Enter dishes (one per line)" rows="4"></textarea>
+            <input type="number" id="newPrice" placeholder="Enter Price (₹)">
+            <button class="btn-update" onclick="updateMenu()">Update Live Website</button>
 
-        <h2>Live Orders</h2>
-        <div class="order-count" id="countBadge">0</div>
-        <button class="btn-refresh" onclick="fetchOrders()">Refresh Orders List</button>
+            <h2>Live Orders</h2>
+            <div class="order-count" id="countBadge">0</div>
+            <button class="btn-refresh" onclick="fetchOrders()">Refresh Orders List</button>
 
-        <div id="orderList">
-            <p style="text-align:center; color:gray;">Click refresh to sync...</p>
+            <div id="orderList">
+                <p style="text-align:center; color:gray;">Click refresh to sync...</p>
+            </div>
+
+            <button class="btn-clear" onclick="clearOrders()">Clear All Data</button>
         </div>
-
-        <button class="btn-clear" onclick="clearOrders()">Clear All Data</button>
     </div>
 
     <script>
         const API_URL = "https://script.google.com/macros/s/AKfycbw28MFKmvjVehdowK_BG4xYjCdxXFbu52F61MtMLUlpABUfE8W5M8H3J3_PsvyYzUSzHQ/exec";
+        function loaded() {
+            const rest_div = document.getElementById('rest');
+            const enter_btn = document.getElementById('etrbtn');
+            if (rest_div) {
+                rest_div.style.display = 'none';
+            } else {
+                console.error("Element with ID 'rest' was not found.");
+            }
+        }
+        function enter_btn() {
+            const passInput = document.getElementById('pass').value;
+            const enter_btn = document.getElementById('etrbtn');
 
+            if (passInput === "1234") {
+                rest_div = document.getElementById('rest');
+                rest_div.style.display = 'block';
+                enter_btn.innerText = "LIVE ADMIN PANEL";
+                enter_btn.style.background = "none";
+                enter_btn.style.color = "red";
+            } else {
+                alert("Incorrect Password");
+            }
+        }
         async function updateMenu() {
             const btn = event.target;
             btn.innerText = "Updating...";
