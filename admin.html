@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LMCST | Admin Control</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;800&family=Inter:wght@300;400;600&family=Manjari:wght@700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;800&family=Inter:wght@300;400;600&family=Manjari:wght@700&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --primary-dark: #1a120b;
@@ -22,7 +24,7 @@
             padding: 20px 10px;
             min-height: 100vh;
             /* Same premium background as live site */
-            background: 
+            background:
                 linear-gradient(rgba(26, 18, 11, 0.85), rgba(26, 18, 11, 0.85)),
                 radial-gradient(var(--dot-color) 1px, transparent 1px),
                 url('https://images.unsplash.com/photo-1626777553730-b8f695d37471?q=80&w=2000&auto=format&fit=crop');
@@ -57,7 +59,8 @@
         }
 
         /* Form Styling */
-        textarea, input {
+        textarea,
+        input {
             width: 100%;
             padding: 14px;
             margin: 8px 0;
@@ -69,7 +72,8 @@
             transition: border-color 0.3s;
         }
 
-        textarea:focus, input:focus {
+        textarea:focus,
+        input:focus {
             outline: none;
             border-color: var(--accent-gold);
         }
@@ -89,14 +93,35 @@
             margin: 10px 0;
         }
 
-        .btn-update { background: var(--primary-dark); color: white; }
-        .btn-update:hover { background: var(--accent-gold); transform: translateY(-2px); }
+        .btn-update {
+            background: var(--primary-dark);
+            color: white;
+        }
 
-        .btn-refresh { background: var(--success-green); color: white; }
-        .btn-refresh:hover { opacity: 0.9; }
+        .btn-update:hover {
+            background: var(--accent-gold);
+            transform: translateY(-2px);
+        }
 
-        .btn-clear { background: transparent; border: 2px solid var(--danger-red); color: var(--danger-red); }
-        .btn-clear:hover { background: var(--danger-red); color: white; }
+        .btn-refresh {
+            background: var(--success-green);
+            color: white;
+        }
+
+        .btn-refresh:hover {
+            opacity: 0.9;
+        }
+
+        .btn-clear {
+            background: transparent;
+            border: 2px solid var(--danger-red);
+            color: var(--danger-red);
+        }
+
+        .btn-clear:hover {
+            background: var(--danger-red);
+            color: white;
+        }
 
         /* Order List Styling */
         #orderList {
@@ -111,12 +136,20 @@
             padding: 15px;
             border-radius: 15px;
             margin-bottom: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
             border-left: 5px solid var(--accent-gold);
         }
 
-        .order-item strong { color: var(--primary-dark); font-size: 1.1rem; }
-        .order-item small { color: #666; display: block; margin-top: 5px; }
+        .order-item strong {
+            color: var(--primary-dark);
+            font-size: 1.1rem;
+        }
+
+        .order-item small {
+            color: #666;
+            display: block;
+            margin-top: 5px;
+        }
 
         /* Total Badge */
         .order-count {
@@ -125,6 +158,33 @@
             font-size: 2rem;
             color: var(--accent-gold);
             margin-bottom: 20px;
+        }
+
+        .order-item.completed {
+            opacity: 0.6;
+            background: #e9ecef;
+            border-left: 5px solid #6c757d;
+            /* Gray border for completed */
+        }
+
+        .order-item.completed strong,
+        .order-item.completed small {
+            text-decoration: line-through;
+        }
+
+        .check-btn {
+            margin-top: 10px;
+            padding: 8px;
+            font-size: 0.8rem;
+            background: var(--success-green);
+            color: white;
+            border-radius: 8px;
+            width: auto;
+            display: inline-block;
+        }
+
+        .order-item.completed .check-btn {
+            background: #6c757d;
         }
     </style>
 </head>
@@ -140,7 +200,7 @@
         <h2>Live Orders</h2>
         <div class="order-count" id="countBadge">0</div>
         <button class="btn-refresh" onclick="fetchOrders()">Refresh Orders List</button>
-        
+
         <div id="orderList">
             <p style="text-align:center; color:gray;">Click refresh to sync...</p>
         </div>
@@ -150,7 +210,7 @@
 
     <script>
         const API_URL = "https://script.google.com/macros/s/AKfycbw28MFKmvjVehdowK_BG4xYjCdxXFbu52F61MtMLUlpABUfE8W5M8H3J3_PsvyYzUSzHQ/exec";
-        
+
         async function updateMenu() {
             const btn = event.target;
             btn.innerText = "Updating...";
@@ -188,32 +248,64 @@
                     orderListDiv.innerHTML = "<p style='text-align:center;'>No orders found.</p>";
                     return;
                 }
-
-                orders.reverse().forEach(order => {
+                // Updated rendering loop inside fetchOrders()
+                orders.reverse().forEach((order, index) => {
                     const div = document.createElement('div');
-                    div.className = 'order-item';
+                    // Using a unique ID based on the order timestamp or index
+                    const orderId = `order-${orders.length - 1 - index}`;
+
+                    // Check local storage to see if this order was already checked off
+                    const isCompleted = localStorage.getItem(orderId) === 'true';
+
+                    div.className = `order-item ${isCompleted ? 'completed' : ''}`;
+                    div.id = orderId;
+
+                    const orderDate = new Date(order[0]).toLocaleDateString('en-IN', {
+                        day: '2-digit', month: 'short', year: 'numeric'
+                    });
+                    const orderTime = new Date(order[0]).toLocaleTimeString('en-IN', {
+                        hour: '2-digit', minute: '2-digit', hour12: true
+                    });
+
                     div.innerHTML = `
-                        <strong>${order[1]}</strong><br>
-                        Sem: ${order[2]} | Ph: ${order[3]}<br>
-                        <small>${new Date(order[0]).toLocaleTimeString()} | ID: ${order[4]}</small>
-                    `;
+        <strong>${order[1]}</strong><br>
+        Sem: ${order[2]} | Ph: ${order[3]}<br>
+        <small>${orderDate} at ${orderTime} | ID: ${order[4]}</small>
+        <button class="check-btn" onclick="toggleOrder('${orderId}')">
+            ${isCompleted ? 'Undo' : 'Mark as Satisfied'}
+        </button>
+    `;
                     orderListDiv.appendChild(div);
                 });
             } catch (e) {
                 orderListDiv.innerHTML = "<p style='text-align:center; color:red;'>Sync Error</p>";
             }
         }
+        function toggleOrder(orderId) {
+            const element = document.getElementById(orderId);
+            const btn = element.querySelector('.check-btn');
+            const isNowCompleted = !element.classList.contains('completed');
 
+            element.classList.toggle('completed');
+
+            btn.innerText = isNowCompleted ? 'Undo' : 'Mark as Satisfied';
+
+            localStorage.setItem(orderId, isNowCompleted);
+        }
         async function clearOrders() {
             const pass = document.getElementById('pass').value;
-            if(!pass) { alert("Please enter Admin Password first"); return; }
-            if (!confirm("PERMANENT DELETE: Are you sure you want to clear the order history?")) return;
-            
+            if (!pass) { alert("Please enter Admin Password"); return; }
+            if (!confirm("Clear all orders from Sheet and Local Storage?")) return;
+
             const payload = { action: "clearOrders", password: pass };
             const res = await fetch(API_URL, { method: "POST", body: JSON.stringify(payload) });
+
+            localStorage.clear();
+
             alert(await res.text());
             fetchOrders();
         }
     </script>
 </body>
+
 </html>
