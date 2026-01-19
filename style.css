@@ -449,6 +449,42 @@
             pointer-events: none;
         }
 
+        .header-banner {
+            position: relative;
+            margin: 40px auto;
+            width: 90%;
+            max-width: 400px;
+            height: 150px;
+            background-image: url('images/head.png');
+            background-size: auto 100%;
+            background-repeat: repeat-x;
+            animation: slideBackground 20s linear infinite;
+            border-radius:16px;
+            border-bottom: 4px solid var(--accent-gold);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            border: none;
+        }
+
+        @keyframes slideBackground {
+            from {
+                background-position: 0 0;
+            }
+
+            to {
+                background-position: -1000px 0;
+            }
+        }
+
+        .banner-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(26, 18, 11, 0.1), rgba(202, 202, 202, 0.179));
+        }
+
         @keyframes floatAnimation {
 
             0%,
