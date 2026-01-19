@@ -7,16 +7,16 @@
     <title>LMCST - Mini Meal Scheme</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" class="mini-favicon" type="image/png"  href="images\icon2.png">
+    <link rel="icon" class="mini-favicon" type="image/png" href="/images/icon2.png">
 </head>
 
 <body>
     <div class="floating-container" id="floatingContainer"></div>
-<nav class="navbar">
-    <div class="brand-container">
-        <img src="images\lmcst_lg.png" alt="Lourdes Matha Logo" class="logo">
-    </div>
-</nav>
+    <nav class="navbar">
+        <div class="brand-container">
+            <img src="images\lmcst_lg.png" alt="Lourdes Matha Logo" class="logo">
+        </div>
+    </nav>
 
     <div class="hero-title">
         <h1 class='head'>Mini Meal Scheme</h1>
@@ -31,8 +31,52 @@
 
         <div id="orderForm">
             <input type="text" id="stdName" placeholder="Full Name">
-            <input type="text" id="stdSem" placeholder="Semester (e.g., S3)">
+            <select id="stdSem">
+                <option value="" disabled selected>Select Semester</option>
+                <option value="S1">S1</option>
+                <option value="S2">S2</option>
+                <option value="S3">S3</option>
+                <option value="S4">S4</option>
+                <option value="S5">S5</option>
+                <option value="S6">S6</option>
+                <option value="S7">S7</option>
+                <option value="S8">S8</option>
+            </select>
+
+            <select id="stdCourse">
+                <option value="" disabled selected>Select Course</option>
+                <optgroup label="B.Tech">
+                    <option value="BTech CE">CE</option>
+                    <option value="BTech CSE">CSE</option>
+                    <option value="BTech AI">AI</option>
+                    <option value="BTech EC">EC</option>
+                    <option value="BTech EE">EE</option>
+                    <option value="BTech ME">ME</option>
+                </optgroup>
+                <optgroup label="Post Graduate">
+                    <option value="MCA">MCA</option>
+                    <option value="MBA">MBA</option>
+                </optgroup>
+                <optgroup label="Undergraduate">
+                    <option value="BA">BA</option>
+                    <option value="BCOM">BCOM</option>
+                    <option value="BCA">BCA</option>
+                    <option value="BHMCT">BHMCT</option>
+                </optgroup>
+            </select>
             <input type="tel" id="stdPhone" placeholder="Phone Number">
+            <div class="meal-counter-container">
+                <span>Number of Meals:</span>
+                <div class="counter-controls">
+                    <button type="button" class="count-btn" onclick="changeCount(-1)">−</button>
+                    <span id="mealCountDisplay">1</span>
+                    <button type="button" class="count-btn" onclick="changeCount(1)">+</button>
+                </div>
+            </div>
+
+            <div class="total-display">
+                Total Amount: <span>₹<span id="totalAmountDisplay">0</span></span>
+            </div>
             <button onclick="submitOrder()">Confirm My Meal</button>
         </div>
     </div>
@@ -49,21 +93,67 @@
             document.getElementById('bookBtn').style.display = 'none';
         }
 
+        let mealQuantity = 1;
+        let unitPrice = 0;
+
+        fetch(API_URL).then(r => r.json()).then(data => {
+            document.getElementById('mealName').innerText = data.itemName;
+            document.getElementById('mealPrice').innerText = data.price;
+            unitPrice = parseFloat(data.price) || 0;
+            updateTotal();
+        });
+
+        function changeCount(delta) {
+            mealQuantity = Math.max(1, mealQuantity + delta);
+            document.getElementById('mealCountDisplay').innerText = mealQuantity;
+            updateTotal();
+        }
+
+        function updateTotal() {
+            const total = mealQuantity * unitPrice;
+            document.getElementById('totalAmountDisplay').innerText = total;
+        }
+
         async function submitOrder() {
-            const name = document.getElementById('stdName').value;
+            const name = document.getElementById('stdName').value.trim();
             const sem = document.getElementById('stdSem').value;
-            const phone = document.getElementById('stdPhone').value;
+            const course = document.getElementById('stdCourse').value;
+            const phone = document.getElementById('stdPhone').value.trim();
             const meal = document.getElementById('mealName').innerText;
 
-            if (!name || !sem || !phone) return alert("Please fill all details");
+            if (!name || !sem || !course || !phone) {
+                return alert("Please fill all details");
+            }
 
-            const response = await fetch(API_URL, {
-                method: "POST",
-                body: JSON.stringify({ action: "order", name, sem, phone, meal })
-            });
-            const result = await response.text();
-            alert(result);
-            location.reload();
+            const phoneRegex = /^[6-9]\d{9}$/;
+            if (!phoneRegex.test(phone)) {
+                return alert("Please enter a valid 10-digit mobile number");
+            }
+
+            alert("Sending your request... Please wait.");
+
+            const totalCost = mealQuantity * unitPrice;
+            const detailedSem = `${sem} - ${course} (Qty: ${mealQuantity} | Total: ₹${totalCost})`;
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: "POST",
+                    body: JSON.stringify({
+                        action: "order",
+                        name,
+                        sem: detailedSem,
+                        phone,
+                        meal
+                    })
+                });
+
+                const result = await response.text();
+
+                alert("Order Placed Successfully!");
+                location.reload();
+            } catch (error) {
+                alert("Submission failed. Please check your internet connection.");
+            }
         }
         function createFloatingMeals() {
             const container = document.getElementById('floatingContainer');
@@ -89,20 +179,19 @@
         window.addEventListener('load', createFloatingMeals);
     </script>
     <footer class="footer">
-    <div class="footer-content">
-        <div class="footer-logo-section">
-            <img src="logo.png" alt="LMCST Logo" class="footer-logo">
+        <div class="footer-content">
+            <div class="footer-logo-section">
+                <img src="logo.png" alt="LMCST Logo" class="footer-logo">
+            </div>
+            <p class="address">
+                Lourdes Matha College of Science and Technology<br>
+                Lourdes Hills, Kuttichal, P.O.<br>
+                Thiruvananthapuram, Kerala - 695574
+            </p>
+            <div class="footer-divider"></div>
+            <p class="copyright">© 2026 Mini Meal Scheme</p>
         </div>
-        <p class="address">
-            Lourdes Matha College of Science and Technology<br>
-            Lourdes Hills, Kuttichal, P.O.<br>
-            Thiruvananthapuram, Kerala - 695574
-        </p>
-        <div class="footer-divider"></div>
-        <p class="copyright">© 2026 Mini Meal Scheme</p>
-    </div>
-</footer>
+    </footer>
 </body>
 
 </html>
-
