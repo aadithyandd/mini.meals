@@ -22,17 +22,16 @@
         <h1 class='head'>Mini Meal Scheme</h1>
         <p style="font-size: 15px;">Initiative by LMCST</p>
     </div>
-<div class="header-banner">
-    <div class="banner-overlay"></div>
-</div>
+
     <div class="card">
         <h2>Today's Menu</h2>
+        <p id="date0"></p>
         <h1 id="mealName">Loading...</h1>
         <div class="price-tag">₹<span id="mealPrice">--</span></div>
         <button id="bookBtn" onclick="showForm()" class='bn'>Book Now</button>
 
         <div id="orderForm">
-                    <p>Order Details</p>
+            <p>Order Details</p>
             <input type="text" id="stdName" placeholder="Full Name">
             <select id="stdSem">
                 <option value="" disabled selected>Select Semester</option>
@@ -83,14 +82,19 @@
             <button onclick="submitOrder()">Confirm My Meal</button>
         </div>
     </div>
-
+    <div class="header-banner">
+        <div class="banner-overlay"></div>
+    </div>
     <script>
         const API_URL = "https://script.google.com/macros/s/AKfycbw28MFKmvjVehdowK_BG4xYjCdxXFbu52F61MtMLUlpABUfE8W5M8H3J3_PsvyYzUSzHQ/exec";
         fetch(API_URL).then(r => r.json()).then(data => {
             document.getElementById('mealName').innerText = data.itemName;
             document.getElementById('mealPrice').innerText = data.price;
         });
-
+        const today = new Date()
+        document.getElementById('date0').innerText = today.toLocaleDateString('en-IN', {
+            day: '2-digit', month: 'short', year: 'numeric'
+        });
         function showForm() {
             document.getElementById('orderForm').style.display = 'block';
             document.getElementById('bookBtn').style.display = 'none';
@@ -198,4 +202,3 @@
 </body>
 
 </html>
-
